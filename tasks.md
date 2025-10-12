@@ -33,57 +33,62 @@
 
 ---
 
-## Phase 2: Core Components
+## Phase 2: Core Components ✓
 
-### Task 2.1: Linear Layer
-- [ ] Implement `Linear` class
-  - [ ] `__init__`: Initialize weights (Xavier/He)
-  - [ ] `forward()`: Matrix multiplication + bias
-  - [ ] `backward()`: Compute gradients
-- [ ] Test with dummy data
-- [ ] Verify gradient shapes
+### Task 2.1: Linear Layer ✓
+- [x] Implement `Linear` class
+  - [x] `__init__`: Initialize weights (Xavier/He)
+  - [x] `forward()`: Matrix multiplication + bias
+  - [x] `backward()`: Compute gradients
+- [x] Test with dummy data
+- [x] Verify gradient shapes
+- [x] Numerical gradient verification
 
-**Files to create**: `layers.py`
+**Files created**: `layers.py`
 
-### Task 2.2: Embedding Layer
-- [ ] Implement `Embedding` class
-  - [ ] `__init__`: Initialize embedding matrix
-  - [ ] `forward()`: Lookup embeddings
-  - [ ] `backward()`: Gradient accumulation
-- [ ] Test embedding lookup
-- [ ] Verify shape: (batch, seq_len) → (batch, seq_len, embed_dim)
+### Task 2.2: Embedding Layer ✓
+- [x] Implement `Embedding` class
+  - [x] `__init__`: Initialize embedding matrix
+  - [x] `forward()`: Lookup embeddings
+  - [x] `backward()`: Gradient accumulation
+- [x] Test embedding lookup
+- [x] Verify shape: (batch, seq_len) → (batch, seq_len, embed_dim)
+- [x] Test gradient accumulation for repeated tokens
 
-**Files to create**: Update `layers.py`
+**Files updated**: `layers.py`
 
-### Task 2.3: Positional Encoding
-- [ ] Implement `PositionalEncoding` class
-  - [ ] `__init__`: Precompute sinusoidal encodings
-  - [ ] `forward()`: Add to embeddings
-- [ ] Visualize positional encoding patterns
-- [ ] Test shape preservation
+### Task 2.3: Positional Encoding ✓
+- [x] Implement `PositionalEncoding` class
+  - [x] `__init__`: Precompute sinusoidal encodings
+  - [x] `forward()`: Add to embeddings
+- [x] Verify positional encoding properties (bounded, unique)
+- [x] Test shape preservation
+- [x] Verify gradient flow
 
-**Files to create**: Update `layers.py`
+**Files updated**: `layers.py`
 
-### Task 2.4: Layer Normalization
-- [ ] Implement `LayerNorm` class
-  - [ ] `__init__`: Learnable scale and shift
-  - [ ] `forward()`: Normalize + scale + shift
-  - [ ] `backward()`: Compute gradients
-- [ ] Test normalization: mean ≈ 0, var ≈ 1
-- [ ] Verify gradient flow
+### Task 2.4: Layer Normalization ✓
+- [x] Implement `LayerNorm` class
+  - [x] `__init__`: Learnable scale and shift
+  - [x] `forward()`: Normalize + scale + shift
+  - [x] `backward()`: Compute gradients
+- [x] Test normalization: mean ≈ 0, var ≈ 1
+- [x] Verify gradient flow
+- [x] Verify learnable parameters (gamma, beta)
 
-**Files to create**: Update `layers.py`
+**Files updated**: `layers.py`
 
-### Task 2.5: Activation Functions
-- [ ] Implement `ReLU` class
-  - [ ] `forward()`: max(0, x)
-  - [ ] `backward()`: gradient masking
-- [ ] Implement `Softmax` class
-  - [ ] `forward()`: exp(x) / sum(exp(x))
-  - [ ] `backward()`: Jacobian computation
-- [ ] Test numerical stability
+### Task 2.5: Activation Functions ✓
+- [x] Implement `ReLU` class
+  - [x] `forward()`: max(0, x)
+  - [x] `backward()`: gradient masking
+- [x] Implement `Softmax` class
+  - [x] `forward()`: exp(x) / sum(exp(x))
+  - [x] `backward()`: Jacobian computation
+- [x] Test numerical stability
+- [x] Numerical gradient verification for Softmax
 
-**Files to create**: Update `layers.py`
+**Files updated**: `layers.py`
 
 ---
 
