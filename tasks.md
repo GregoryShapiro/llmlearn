@@ -130,41 +130,42 @@
 
 ---
 
-## Phase 4: Transformer Block
+## Phase 4: Transformer Block ✓
 
-### Task 4.1: Feed-Forward Network
-- [ ] Implement `FeedForward` class
-  - [ ] Two linear layers with ReLU
-  - [ ] Forward pass: Linear → ReLU → Linear
-  - [ ] Backward pass
-- [ ] Test dimensions: (embed_dim → ffn_dim → embed_dim)
-- [ ] Verify gradient flow
+### Task 4.1: Feed-Forward Network ✓
+- [x] Implement `FeedForward` class
+  - [x] Two linear layers with ReLU
+  - [x] Forward pass: Linear → ReLU → Linear
+  - [x] Backward pass
+- [x] Test dimensions: (embed_dim → ffn_dim → embed_dim)
+- [x] Verify gradient flow
 
-**Files to create**: `transformer.py`
+**Files created**: `src/transformer.py`
 
-### Task 4.2: Transformer Block
-- [ ] Implement `TransformerBlock` class
-  - [ ] Multi-head attention sub-layer
-  - [ ] Add & Norm (residual + layer norm)
-  - [ ] Feed-forward sub-layer
-  - [ ] Add & Norm again
-  - [ ] Forward pass through complete block
-- [ ] Test single block
-- [ ] Verify residual connections work
+### Task 4.2: Transformer Block ✓
+- [x] Implement `TransformerBlock` class
+  - [x] Multi-head attention sub-layer
+  - [x] Add & Norm (residual + layer norm)
+  - [x] Feed-forward sub-layer
+  - [x] Add & Norm again
+  - [x] Forward pass through complete block
+- [x] Test single block
+- [x] Verify residual connections work
 
-**Files to create**: Update `transformer.py`
+**Files updated**: `src/transformer.py`
 
-### Task 4.3: Complete Transformer Model
-- [ ] Implement `Transformer` class
-  - [ ] Embedding layer
-  - [ ] Positional encoding
-  - [ ] Stack of N transformer blocks
-  - [ ] Output projection layer
-  - [ ] Forward pass through entire model
-- [ ] Test end-to-end forward pass
-- [ ] Verify output shape: (batch, vocab_size)
+### Task 4.3: Complete Transformer Model ✓
+- [x] Implement `Transformer` class
+  - [x] Embedding layer
+  - [x] Positional encoding
+  - [x] Stack of N transformer blocks
+  - [x] Output projection layer
+  - [x] Forward pass through entire model
+- [x] Test end-to-end forward pass
+- [x] Verify output shape: (batch, vocab_size)
 
-**Files to create**: Update `transformer.py`
+**Files updated**: `src/transformer.py`
+**Test files created**: `tests/test_transformer.py`
 
 ---
 
