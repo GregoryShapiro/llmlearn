@@ -10,9 +10,11 @@ Modules:
     positional_encoding: Sinusoidal positional encoding for transformers
     normalization: Layer normalization
     activations: ReLU and Softmax activation functions
+    attention: Scaled dot-product attention and multi-head attention
 
 Usage:
-    from layers import Embedding, Linear, PositionalEncoding, LayerNorm, ReLU, Softmax
+    from layers import (Embedding, Linear, PositionalEncoding, LayerNorm,
+                        ReLU, Softmax, MultiHeadAttention)
 
     # Create layers
     embedding = Embedding(vocab_size=20, embed_dim=64)
@@ -21,6 +23,7 @@ Usage:
     layer_norm = LayerNorm(normalized_shape=128)
     relu = ReLU()
     softmax = Softmax()
+    attention = MultiHeadAttention(embed_dim=64, num_heads=4)
 """
 
 from .embedding import Embedding
@@ -28,6 +31,7 @@ from .linear import Linear
 from .positional_encoding import PositionalEncoding
 from .normalization import LayerNorm
 from .activations import ReLU, Softmax
+from .attention import MultiHeadAttention, scaled_dot_product_attention
 
 __all__ = [
     'Embedding',
@@ -36,6 +40,8 @@ __all__ = [
     'LayerNorm',
     'ReLU',
     'Softmax',
+    'MultiHeadAttention',
+    'scaled_dot_product_attention',
 ]
 
-__version__ = '0.2.0'
+__version__ = '0.3.0'

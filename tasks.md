@@ -92,40 +92,41 @@
 
 ---
 
-## Phase 3: Attention Mechanism
+## Phase 3: Attention Mechanism ✓
 
-### Task 3.1: Scaled Dot-Product Attention
-- [ ] Implement `scaled_dot_product_attention()` function
-  - [ ] Compute Q @ K^T
-  - [ ] Scale by sqrt(d_k)
-  - [ ] Apply softmax
-  - [ ] Multiply by V
-- [ ] Test with dummy Q, K, V matrices
-- [ ] Verify attention weights sum to 1
+### Task 3.1: Scaled Dot-Product Attention ✓
+- [x] Implement `scaled_dot_product_attention()` function
+  - [x] Compute Q @ K^T
+  - [x] Scale by sqrt(d_k)
+  - [x] Apply softmax
+  - [x] Multiply by V
+- [x] Test with dummy Q, K, V matrices
+- [x] Verify attention weights sum to 1
 
-**Files to create**: `attention.py`
+**Files created**: `src/layers/attention.py`
 
-### Task 3.2: Multi-Head Attention
-- [ ] Implement `MultiHeadAttention` class
-  - [ ] `__init__`: Create Q, K, V, O projection matrices
-  - [ ] Split into multiple heads
-  - [ ] Apply attention per head
-  - [ ] Concatenate and project
-  - [ ] Implement forward pass
-- [ ] Test with single example
-- [ ] Verify output shape matches input shape
+### Task 3.2: Multi-Head Attention ✓
+- [x] Implement `MultiHeadAttention` class
+  - [x] `__init__`: Create Q, K, V, O projection matrices
+  - [x] Split into multiple heads
+  - [x] Apply attention per head
+  - [x] Concatenate and project
+  - [x] Implement forward pass
+- [x] Test with single example
+- [x] Verify output shape matches input shape
 
-**Files to create**: Update `attention.py`
+**Files updated**: `src/layers/attention.py`
 
-### Task 3.3: Attention Backward Pass
-- [ ] Implement gradient computation for attention
-  - [ ] Softmax gradient
-  - [ ] Q, K, V gradients
-  - [ ] Head splitting/concatenation gradients
-- [ ] Test with numerical gradient checking
-- [ ] Verify gradient shapes
+### Task 3.3: Attention Backward Pass ✓
+- [x] Implement gradient computation for attention
+  - [x] Softmax gradient
+  - [x] Q, K, V gradients
+  - [x] Head splitting/concatenation gradients
+- [x] Test with gradient flow verification
+- [x] Verify gradient shapes
 
-**Files to create**: Update `attention.py`
+**Files updated**: `src/layers/attention.py`
+**Test files created**: `tests/test_attention.py`
 
 ---
 

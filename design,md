@@ -233,12 +233,14 @@ llmlearn/
 │   │   ├── linear.py        # Fully connected (dense) layer
 │   │   ├── positional_encoding.py  # Sinusoidal position encoding
 │   │   ├── normalization.py # Layer normalization
-│   │   └── activations.py   # ReLU and Softmax functions
+│   │   ├── activations.py   # ReLU and Softmax functions
+│   │   └── attention.py     # Scaled dot-product and multi-head attention
 │   ├── vocabluary.py        # Vocabulary and tokenization
 │   ├── data_generatpr.py    # Training data generation
 │   └── data_utils.py        # Batching, padding, DataLoader
 ├── tests/
-│   └── test_layers.py       # Comprehensive test suite
+│   ├── test_layers.py       # Core layer tests (Phase 1 & 2)
+│   └── test_attention.py    # Attention mechanism tests (Phase 3)
 ├── design,md                # Architecture and design decisions
 ├── tasks.md                 # Task breakdown and progress tracking
 └── README.md                # Project documentation
