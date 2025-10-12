@@ -221,6 +221,36 @@ Loss:           Cross-Entropy
 4. **Autoregressive**: Convert to decoder-style
 5. **PyTorch Reimplementation**: Compare with framework version
 
+## Code Organization
+
+### Project Structure
+```
+llmlearn/
+├── src/
+│   ├── layers/              # Neural network layer implementations
+│   │   ├── __init__.py      # Package exports
+│   │   ├── embedding.py     # Token embedding layer
+│   │   ├── linear.py        # Fully connected (dense) layer
+│   │   ├── positional_encoding.py  # Sinusoidal position encoding
+│   │   ├── normalization.py # Layer normalization
+│   │   └── activations.py   # ReLU and Softmax functions
+│   ├── vocabluary.py        # Vocabulary and tokenization
+│   ├── data_generatpr.py    # Training data generation
+│   └── data_utils.py        # Batching, padding, DataLoader
+├── tests/
+│   └── test_layers.py       # Comprehensive test suite
+├── design,md                # Architecture and design decisions
+├── tasks.md                 # Task breakdown and progress tracking
+└── README.md                # Project documentation
+```
+
+### Modular Design Rationale
+- **Separation of Concerns**: Each layer in its own file for clarity
+- **Comprehensive Documentation**: Every class and function extensively documented
+- **Design Explanations**: Comments explain WHY certain approaches were chosen
+- **Educational Focus**: Code prioritizes readability over optimization
+- **Test Coverage**: All components have unit tests with gradient verification
+
 ## Tools & Dependencies
 ```
 Required:
