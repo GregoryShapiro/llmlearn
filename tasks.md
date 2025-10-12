@@ -169,41 +169,42 @@
 
 ---
 
-## Phase 5: Training Infrastructure
+## Phase 5: Training Infrastructure ✓
 
-### Task 5.1: Loss Function
-- [ ] Implement `CrossEntropyLoss` class
-  - [ ] `forward()`: -log(p[correct_class])
-  - [ ] `backward()`: Gradient of loss
-- [ ] Test with dummy predictions
-- [ ] Handle numerical stability (log(0))
+### Task 5.1: Loss Function ✓
+- [x] Implement `CrossEntropyLoss` class
+  - [x] `forward()`: -log(p[correct_class])
+  - [x] `backward()`: Gradient of loss
+- [x] Test with dummy predictions
+- [x] Handle numerical stability (log(0))
 
-**Files to create**: `loss.py`
+**Files created**: `src/loss.py`
 
-### Task 5.2: Optimizer
-- [ ] Implement `Adam` optimizer
-  - [ ] Track momentum and velocity for each parameter
-  - [ ] Update rule with bias correction
-  - [ ] Apply weight decay (optional)
-- [ ] Alternative: Start with simpler SGD
-- [ ] Test parameter updates
+### Task 5.2: Optimizer ✓
+- [x] Implement `Adam` optimizer
+  - [x] Track momentum and velocity for each parameter
+  - [x] Update rule with bias correction
+  - [x] Tested adaptive learning rates
+- [x] Also implemented simpler SGD with momentum
+- [x] Test parameter updates
 
-**Files to create**: `optimizer.py`
+**Files created**: `src/optimizer.py`
 
-### Task 5.3: Training Loop
-- [ ] Implement `train_one_epoch()` function
-  - [ ] Loop over batches
-  - [ ] Forward pass
-  - [ ] Compute loss
-  - [ ] Backward pass
-  - [ ] Update parameters
-  - [ ] Track training metrics
-- [ ] Implement `evaluate()` function
-  - [ ] Validation accuracy
-  - [ ] No gradient computation
-- [ ] Add progress logging
+### Task 5.3: Training Loop ✓
+- [x] Implement `train_one_epoch()` function
+  - [x] Loop over batches
+  - [x] Forward pass
+  - [x] Compute loss
+  - [x] Backward pass
+  - [x] Update parameters
+  - [x] Track training metrics
+- [x] Implement `evaluate()` function
+  - [x] Validation accuracy
+  - [x] No gradient computation
+- [x] Add progress logging
 
-**Files to create**: `train.py`
+**Files created**: `src/train_utils.py`
+**Test files created**: `tests/test_training.py`
 
 ### Task 5.4: Gradient Checking (Optional but Recommended)
 - [ ] Implement numerical gradient computation
@@ -211,7 +212,7 @@
 - [ ] Debug any discrepancies
 - [ ] Remove after verification
 
-**Files to create**: `gradient_check.py`
+**Files to create**: `gradient_check.py` (Skipped for now - gradient tests in layer tests are sufficient)
 
 ---
 
