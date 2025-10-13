@@ -10,11 +10,12 @@ extended to larger numbers for generalization testing.
 """
 
 import random
+from typing import List, Tuple, Dict, Callable, Optional, Union
 from vocabluary import tokenize_with_numbers
 
 
 # Define available operations and their implementations
-OPERATIONS = {
+OPERATIONS: Dict[str, Callable[[List[int]], int]] = {
     'First': lambda args: args[0],
     'Second': lambda args: args[1],
     'Last': lambda args: args[-1],
@@ -23,21 +24,22 @@ OPERATIONS = {
 }
 
 
-def generate_example(num_args=3, max_value=99, min_value=0, operations=None):
+def generate_example(num_args: int = 3, max_value: int = 99, min_value: int = 0,
+                     operations: Optional[List[str]] = None) -> Tuple[List[Union[str, int]], int]:
     """
     Generate a single training example with operation and answer.
-    
+
     Args:
         num_args: Number of arguments for the operation (default: 3)
         max_value: Maximum value for random numbers (default: 99 for 1-2 digits)
         min_value: Minimum value for random numbers (default: 0)
         operations: List of operation names to choose from (default: all operations)
-    
+
     Returns:
         Tuple of (input_sequence, answer):
             - input_sequence: List of tokens like ['Max', '(', 5, ',', 3, ',', 9, ')']
             - answer: Single integer representing the answer
-    
+
     Example:
         >>> random.seed(42)
         >>> input_seq, answer = generate_example()
@@ -70,24 +72,25 @@ def generate_example(num_args=3, max_value=99, min_value=0, operations=None):
     return input_sequence, answer
 
 
-def generate_tokenized_example(num_args=3, max_value=99, min_value=0, operations=None):
+def generate_tokenized_example(num_args: int = 3, max_value: int = 99, min_value: int = 0,
+                              operations: Optional[List[str]] = None) -> Tuple[List[int], List[int]]:
     """
     Generate a training example with tokenized input and output.
-    
+
     This is a convenience function that generates an example and immediately
     tokenizes it for use in the model.
-    
+
     Args:
         num_args: Number of arguments for the operation (default: 3)
         max_value: Maximum value for random numbers (default: 99 for 1-2 digits)
         min_value: Minimum value for random numbers (default: 0)
         operations: List of operation names to choose from (default: all operations)
-    
+
     Returns:
         Tuple of (input_indices, answer_index):
             - input_indices: List of token indices for the input
             - answer_index: Single token index for the answer (or list for multi-digit)
-    
+
     Example:
         >>> random.seed(42)
         >>> input_indices, answer_indices = generate_tokenized_example()
@@ -107,11 +110,12 @@ def generate_tokenized_example(num_args=3, max_value=99, min_value=0, operations
     return input_indices, answer_indices
 
 
-def generate_dataset(num_examples, num_args=3, max_value=99, min_value=0, 
-                     operations=None, balance_operations=True):
+def generate_dataset(num_examples: int, num_args: int = 3, max_value: int = 99,
+                     min_value: int = 0, operations: Optional[List[str]] = None,
+                     balance_operations: bool = True) -> List[Tuple[List[Union[str, int]], int]]:
     """
     Generate a complete dataset of examples.
-    
+
     Args:
         num_examples: Total number of examples to generate
         num_args: Number of arguments per operation (default: 3)
@@ -119,10 +123,10 @@ def generate_dataset(num_examples, num_args=3, max_value=99, min_value=0,
         min_value: Minimum value for random numbers (default: 0)
         operations: List of operation names to use (default: all)
         balance_operations: If True, ensure equal distribution of operations
-    
+
     Returns:
         List of tuples (input_sequence, answer), each example in raw token form
-    
+
     Example:
         >>> random.seed(42)
         >>> dataset = generate_dataset(10, max_value=9)
@@ -161,11 +165,12 @@ def generate_dataset(num_examples, num_args=3, max_value=99, min_value=0,
     return dataset
 
 
-def generate_tokenized_dataset(num_examples, num_args=3, max_value=99, min_value=0,
-                               operations=None, balance_operations=True):
+def generate_tokenized_dataset(num_examples: int, num_args: int = 3, max_value: int = 99,
+                               min_value: int = 0, operations: Optional[List[str]] = None,
+                               balance_operations: bool = True) -> List[Tuple[List[int], List[int]]]:
     """
     Generate a complete dataset with tokenized examples.
-    
+
     Args:
         num_examples: Total number of examples to generate
         num_args: Number of arguments per operation (default: 3)
@@ -173,7 +178,7 @@ def generate_tokenized_dataset(num_examples, num_args=3, max_value=99, min_value
         min_value: Minimum value for random numbers (default: 0)
         operations: List of operation names to use (default: all)
         balance_operations: If True, ensure equal distribution of operations
-    
+
     Returns:
         List of tuples (input_indices, answer_indices)
     """
@@ -189,19 +194,24 @@ def generate_tokenized_dataset(num_examples, num_args=3, max_value=99, min_value
     return tokenized_dataset
 
 
-def split_dataset(dataset, train_ratio=0.8, val_ratio=0.1, test_ratio=0.1):
+def split_dataset(dataset: List[Tuple[List[int], List[int]]], train_ratio: float = 0.8,
+                  val_ratio: float = 0.1, test_ratio: float = 0.1) -> Tuple[
+                      List[Tuple[List[int], List[int]]],
+                      List[Tuple[List[int], List[int]]],
+                      List[Tuple[List[int], List[int]]]
+                  ]:
     """
     Split a dataset into train, validation, and test sets.
-    
+
     Args:
         dataset: List of examples
         train_ratio: Proportion for training (default: 0.8)
         val_ratio: Proportion for validation (default: 0.1)
         test_ratio: Proportion for testing (default: 0.1)
-    
+
     Returns:
         Tuple of (train_set, val_set, test_set)
-    
+
     Example:
         >>> dataset = generate_dataset(100)
         >>> train, val, test = split_dataset(dataset)
@@ -222,16 +232,16 @@ def split_dataset(dataset, train_ratio=0.8, val_ratio=0.1, test_ratio=0.1):
     return train_set, val_set, test_set
 
 
-def get_operation_distribution(dataset):
+def get_operation_distribution(dataset: List[Tuple[List[Union[str, int]], int]]) -> Dict[str, int]:
     """
     Analyze the distribution of operations in a dataset.
-    
+
     Args:
         dataset: List of (input_sequence, answer) tuples
-    
+
     Returns:
         Dictionary mapping operation names to their counts
-    
+
     Example:
         >>> dataset = generate_dataset(100, balance_operations=True)
         >>> dist = get_operation_distribution(dataset)
