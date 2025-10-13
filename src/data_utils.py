@@ -7,28 +7,29 @@ padding and attention masks.
 """
 
 import numpy as np
+from typing import List, Tuple, Dict, Optional, Iterator
 from vocabluary import VOCAB
 
 
 # Padding token index
-PAD_TOKEN = VOCAB['[PAD]']
+PAD_TOKEN: int = VOCAB['[PAD]']
 
 
-def pad_sequence(sequence, max_length, pad_value=PAD_TOKEN):
+def pad_sequence(sequence: List[int], max_length: int, pad_value: int = PAD_TOKEN) -> np.ndarray:
     """
     Pad a sequence to a fixed length.
-    
+
     Args:
         sequence: List of token indices
         max_length: Target length to pad to
         pad_value: Value to use for padding (default: PAD_TOKEN)
-    
+
     Returns:
         Padded sequence as numpy array
-        
+
     Raises:
         ValueError: If sequence is longer than max_length
-    
+
     Example:
         >>> pad_sequence([15, 17, 7, 19, 5], max_length=10)
         array([15, 17,  7, 19,  5,  0,  0,  0,  0,  0])
@@ -45,20 +46,20 @@ def pad_sequence(sequence, max_length, pad_value=PAD_TOKEN):
     return padded
 
 
-def create_attention_mask(sequence, max_length):
+def create_attention_mask(sequence: List[int], max_length: int) -> np.ndarray:
     """
     Create an attention mask for a sequence.
-    
+
     The mask has 1s for real tokens and 0s for padding tokens.
     This tells the attention mechanism which positions to ignore.
-    
+
     Args:
         sequence: List of token indices
         max_length: Length to pad the mask to
-    
+
     Returns:
         Attention mask as numpy array (1 for real tokens, 0 for padding)
-    
+
     Example:
         >>> create_attention_mask([15, 17, 7, 19, 5], max_length=10)
         array([1, 1, 1, 1, 1, 0, 0, 0, 0, 0])
@@ -75,21 +76,22 @@ def create_attention_mask(sequence, max_length):
     return mask
 
 
-def create_batch(examples, max_length=None, pad_value=PAD_TOKEN):
+def create_batch(examples: List[Tuple[List[int], List[int]]], max_length: Optional[int] = None,
+                pad_value: int = PAD_TOKEN) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     """
     Create a batch from a list of examples with padding.
-    
+
     Args:
         examples: List of tuples (input_indices, answer_indices)
         max_length: Maximum sequence length (if None, use longest in batch)
         pad_value: Value to use for padding
-    
+
     Returns:
         Tuple of (input_batch, answer_batch, attention_masks):
             - input_batch: np.array of shape (batch_size, max_length)
             - answer_batch: np.array of shape (batch_size, max_answer_length)
             - attention_masks: np.array of shape (batch_size, max_length)
-    
+
     Example:
         >>> examples = [
         ...     ([15, 17, 7, 19, 5, 19, 11, 18], [11]),
@@ -135,18 +137,19 @@ def create_batch(examples, max_length=None, pad_value=PAD_TOKEN):
 class DataLoader:
     """
     DataLoader for batching and iterating through a dataset.
-    
+
     This class handles:
     - Batching examples
     - Shuffling data
     - Padding sequences
     - Creating attention masks
     """
-    
-    def __init__(self, dataset, batch_size, max_length=None, shuffle=True, pad_value=PAD_TOKEN):
+
+    def __init__(self, dataset: List[Tuple[List[int], List[int]]], batch_size: int,
+                 max_length: Optional[int] = None, shuffle: bool = True, pad_value: int = PAD_TOKEN):
         """
         Initialize the DataLoader.
-        
+
         Args:
             dataset: List of (input_indices, answer_indices) tuples
             batch_size: Number of examples per batch
@@ -171,11 +174,11 @@ class DataLoader:
         self.num_batches = (len(dataset) + batch_size - 1) // batch_size
         self.indices = np.arange(len(dataset))
     
-    def __len__(self):
+    def __len__(self) -> int:
         """Return the number of batches."""
         return self.num_batches
-    
-    def __iter__(self):
+
+    def __iter__(self) -> Iterator[Tuple[np.ndarray, np.ndarray, np.ndarray]]:
         """Iterate through batches."""
         # Shuffle indices if requested
         if self.shuffle:
@@ -199,10 +202,10 @@ class DataLoader:
             
             yield input_batch, answer_batch, attention_masks
     
-    def get_batch_stats(self):
+    def get_batch_stats(self) -> Dict[str, int]:
         """
         Get statistics about the batches.
-        
+
         Returns:
             Dictionary with batch statistics
         """
@@ -215,16 +218,16 @@ class DataLoader:
         }
 
 
-def get_sequence_lengths(dataset):
+def get_sequence_lengths(dataset: List[Tuple[List[int], List[int]]]) -> Dict[str, float]:
     """
     Analyze sequence lengths in a dataset.
-    
+
     Args:
         dataset: List of (input_indices, answer_indices) tuples
-    
+
     Returns:
         Dictionary with length statistics
-    
+
     Example:
         >>> dataset = [([1, 2, 3], [1]), ([1, 2, 3, 4, 5], [2])]
         >>> stats = get_sequence_lengths(dataset)
@@ -249,14 +252,15 @@ def get_sequence_lengths(dataset):
     }
 
 
-def calculate_padding_waste(dataset, max_length=None):
+def calculate_padding_waste(dataset: List[Tuple[List[int], List[int]]],
+                           max_length: Optional[int] = None) -> Dict[str, float]:
     """
     Calculate how much padding is wasted in a dataset.
-    
+
     Args:
         dataset: List of (input_indices, answer_indices) tuples
         max_length: Maximum sequence length (if None, use longest sequence)
-    
+
     Returns:
         Dictionary with padding statistics
     """
@@ -374,7 +378,7 @@ if __name__ == "__main__":
     # Create a larger test dataset
     import random
     random.seed(42)
-    from data_generator import generate_tokenized_dataset
+    from data_generatpr import generate_tokenized_dataset
     
     dataset = generate_tokenized_dataset(num_examples=50, max_value=9)
     dataloader = DataLoader(dataset, batch_size=8, shuffle=True)
