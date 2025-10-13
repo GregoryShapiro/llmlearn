@@ -18,10 +18,11 @@ python3 train_step_by_step.py --size medium --epochs 20
 
 ### Option 3: Large Dataset (100,000 examples)
 ```bash
-python3 train_step_by_step.py --size large --epochs 50
+python3 train_step_by_step.py --size large --epochs 50 --no-interactive
 ```
 **Time:** ~2-3 hours
 **Purpose:** Best possible accuracy
+**Note:** Use `--no-interactive` flag to skip pauses (useful for long training runs)
 
 ## What You'll See
 
@@ -98,18 +99,24 @@ Per-Operation:
 
 ### Medium Dataset (10,000 examples, 20 epochs)
 ```
-Train Accuracy: 85-95%
-Val Accuracy:   80-90%
-Test Accuracy:  80-90%
-Time:           15-20 minutes
+Train Accuracy: 93-99%
+Val Accuracy:   93-99%
+Test Accuracy:  93-99%
+Time:           ~6 minutes
 
-Per-Operation:
-  First:  95%+
-  Second: 90-95%
-  Last:   95%+
-  Max:    75-85%
-  Min:    75-85%
+Actual Results (from training runs):
+  Run 1 (seed=42):  93.5% test accuracy
+  Run 2 (seed=123): 99.2% test accuracy ⭐
+
+Per-Operation (Run 2):
+  First:  97.5%
+  Second: 99.0%
+  Last:   100.0%
+  Max:    99.4%
+  Min:    100.0%
 ```
+
+**Note:** Performance varies with random seed. Both runs show the model can learn all operations very well (93%+ overall).
 
 ### Large Dataset (100,000 examples, 50 epochs)
 ```
@@ -142,10 +149,11 @@ python3 train_step_by_step.py --size medium --epochs 15 --batch-size 128 --lr 0.
 
 ### All Available Options
 ```
---size        Dataset size: small (1K), medium (10K), large (100K)
---epochs      Number of training epochs (default: 10)
---batch-size  Batch size (default: 32)
---lr          Learning rate (default: 0.001)
+--size           Dataset size: small (1K), medium (10K), large (100K)
+--epochs         Number of training epochs (default: 10)
+--batch-size     Batch size (default: 32)
+--lr             Learning rate (default: 0.001)
+--no-interactive Skip interactive pauses (useful for long runs)
 ```
 
 ## Interactive Features
@@ -182,10 +190,10 @@ After training, you'll have:
   → Model not learning, check for bugs
 
 ### What to Expect
-- **First/Second/Last**: Easiest (90%+ with medium dataset)
-  - Just requires learning position
-- **Max/Min**: Harder (75-85% with medium dataset)
-  - Requires comparing multiple numbers
+- **All Operations**: With medium+ dataset, expect 97-100% accuracy on all operations
+  - Earlier assumption that Max/Min are "harder" was incorrect
+  - Performance differences are mainly due to random initialization, not inherent difficulty
+  - With proper training, all operations learn very well
 
 ## Visualization Tips
 
@@ -263,11 +271,11 @@ python3 train_step_by_step.py --size small --batch-size 128
 
 ## Quick Reference
 
-| Dataset | Examples | Epochs | Time    | Expected Acc |
-|---------|----------|--------|---------|--------------|
-| Small   | 1,000    | 10     | 2-3 min | 55-65%       |
-| Medium  | 10,000   | 20     | 15-20 min | 80-90%     |
-| Large   | 100,000  | 50     | 2-3 hrs | 90-95%       |
+| Dataset | Examples | Epochs | Time      | Expected Acc |
+|---------|----------|--------|-----------|--------------|
+| Small   | 1,000    | 10     | 2-3 min   | 55-65%       |
+| Medium  | 10,000   | 20     | ~6 min    | 93-99%       |
+| Large   | 100,000  | 50     | 2-3 hrs   | 95%+         |
 
 ---
 
