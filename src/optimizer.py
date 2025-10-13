@@ -72,17 +72,20 @@ class SGD:
         Initialize SGD optimizer.
 
         Args:
-            parameters (list): List of (param, grad) tuples
+            parameters (list or callable): List of (param, grad) tuples, or callable that returns such a list
             learning_rate (float): Learning rate
             momentum (float): Momentum factor (0 = no momentum)
         """
-        self.parameters = parameters
+        # Store parameters or parameter getter
+        self.param_source = parameters if callable(parameters) else None
+        self.parameters = parameters if not callable(parameters) else parameters()
+
         self.learning_rate = learning_rate
         self.momentum = momentum
 
         # Initialize velocity for momentum
         # velocity stores the exponentially weighted moving average of gradients
-        self.velocities = [np.zeros_like(param) for param, _ in parameters]
+        self.velocities = [np.zeros_like(param) for param, _ in self.parameters]
 
     def step(self):
         """
@@ -90,6 +93,10 @@ class SGD:
 
         Updates all parameters using their gradients and the SGD update rule.
         """
+        # Get fresh parameters with updated gradients
+        if self.param_source is not None:
+            self.parameters = self.param_source()
+
         for i, (param, grad) in enumerate(self.parameters):
             if grad is None:
                 continue  # Skip parameters without gradients
@@ -207,23 +214,28 @@ class Adam:
             - ε=1e-8: Small enough to not affect optimization, prevents division by zero
 
         Args:
-            parameters (list): List of (param, grad) tuples
+            parameters (list or callable): List of (param, grad) tuples, or callable that returns such a list
             learning_rate (float): Learning rate (alpha in paper)
             beta1 (float): Decay rate for first moment estimates
             beta2 (float): Decay rate for second moment estimates
             epsilon (float): Small constant for numerical stability
         """
-        self.parameters = parameters
+        # Store parameters or parameter getter
+        # If callable (like model.get_parameters), call it each step to get fresh gradients
+        # If list, use directly (for backward compatibility)
+        self.param_source = parameters if callable(parameters) else None
+        self.parameters = parameters if not callable(parameters) else parameters()
+
         self.learning_rate = learning_rate
         self.beta1 = beta1
         self.beta2 = beta2
         self.epsilon = epsilon
 
         # Initialize first moment (momentum) - exponentially decaying average of gradients
-        self.m = [np.zeros_like(param) for param, _ in parameters]
+        self.m = [np.zeros_like(param) for param, _ in self.parameters]
 
         # Initialize second moment (variance) - exponentially decaying average of squared gradients
-        self.v = [np.zeros_like(param) for param, _ in parameters]
+        self.v = [np.zeros_like(param) for param, _ in self.parameters]
 
         # Timestep for bias correction
         # t starts at 0, increments each time step() is called
@@ -252,6 +264,11 @@ class Adam:
         """
         # Increment timestep
         self.t += 1
+
+        # Get fresh parameters with updated gradients
+        # This is crucial because layers replace gradient arrays during backward()
+        if self.param_source is not None:
+            self.parameters = self.param_source()
 
         # Loop over all parameters
         for i, (param, grad) in enumerate(self.parameters):

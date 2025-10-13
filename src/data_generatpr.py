@@ -10,7 +10,7 @@ extended to larger numbers for generalization testing.
 """
 
 import random
-from vocabulary import tokenize_with_numbers
+from vocabluary import tokenize_with_numbers
 
 
 # Define available operations and their implementations

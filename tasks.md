@@ -1,35 +1,35 @@
 # Transformer from Scratch - Task List
 
-## Phase 1: Data Pipeline ✓ (Start Here)
+## Phase 1: Data Pipeline ✓
 
-### Task 1.1: Vocabulary & Tokenization
-- [ ] Define vocabulary dictionary (20 tokens)
-- [ ] Create reverse vocabulary (index → token)
-- [ ] Write `tokenize()` function: text → token indices
-- [ ] Write `detokenize()` function: indices → text
-- [ ] Test with sample inputs
+### Task 1.1: Vocabulary & Tokenization ✓
+- [x] Define vocabulary dictionary (20 tokens)
+- [x] Create reverse vocabulary (index → token)
+- [x] Write `tokenize()` function: text → token indices
+- [x] Write `detokenize()` function: indices → text
+- [x] Test with sample inputs
 
-**Files to create**: `vocabulary.py`
+**Files created**: `src/vocabluary.py`
 
-### Task 1.2: Data Generation
-- [ ] Write `generate_example()` function
-  - [ ] Random operation selection
-  - [ ] Random digit generation (0-9)
-  - [ ] Compute correct answer
-  - [ ] Format as input sequence
-- [ ] Generate 10,000 examples
-- [ ] Split into train/val/test (80/10/10)
-- [ ] Save to files or keep in memory
+### Task 1.2: Data Generation ✓
+- [x] Write `generate_example()` function
+  - [x] Random operation selection
+  - [x] Random digit generation (0-9)
+  - [x] Compute correct answer
+  - [x] Format as input sequence
+- [x] Generate 10,000 examples support
+- [x] Split into train/val/test (80/10/10)
+- [x] Balance operations option
 
-**Files to create**: `data_generator.py`
+**Files created**: `src/data_generatpr.py`
 
-### Task 1.3: Batching & Padding
-- [ ] Write `create_batch()` function
-- [ ] Implement padding to max length in batch
-- [ ] Create attention masks for padded positions
-- [ ] Test batch shapes
+### Task 1.3: Batching & Padding ✓
+- [x] Write `create_batch()` function
+- [x] Implement padding to max length in batch
+- [x] Create attention masks for padded positions
+- [x] Test batch shapes
 
-**Files to create**: `data_utils.py`
+**Files created**: `src/data_utils.py`
 
 ---
 

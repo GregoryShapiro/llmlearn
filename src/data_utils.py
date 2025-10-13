@@ -7,7 +7,7 @@ padding and attention masks.
 """
 
 import numpy as np
-from vocabulary import VOCAB
+from vocabluary import VOCAB
 
 
 # Padding token index
