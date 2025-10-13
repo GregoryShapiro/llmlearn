@@ -276,7 +276,7 @@ llmlearn/
 │   ├── test_attention.py    # Attention mechanism tests (Phase 3)
 │   ├── test_transformer.py  # Transformer architecture tests (Phase 4)
 │   └── test_training.py     # Training infrastructure tests (Phase 5)
-├── design,md                # Architecture and design decisions
+├── design.md                # Architecture and design decisions
 ├── tasks.md                 # Task breakdown and progress tracking
 └── README.md                # Project documentation
 ```
