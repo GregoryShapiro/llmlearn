@@ -20,28 +20,39 @@ wheels/
 .installed.cfg
 *.egg
 
-# Virtual environments
+# Virtual Environment
 venv/
-ENV/
 env/
+ENV/
+.venv
 
-# IDEs
+# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Model checkpoints
+checkpoints/
+*.pkl
+
+# Training outputs
+*.png
+*.pdf
+training_curves.*
+
 # OS
 .DS_Store
 Thumbs.db
 
-# Project specific
-*.npy
-*.npz
-checkpoints/
-logs/
-models/
-*.png
-*.jpg
-*.jpeg
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs
+*.log
