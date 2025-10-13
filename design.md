@@ -1,0 +1,327 @@
+# Transformer from Scratch - Design Document
+
+## Project Goal
+
+Build a minimal transformer model from scratch (no PyTorch/TensorFlow) to understand LLM architecture through a toy problem: learning simple operations on digits.
+
+## Problem Definition
+
+### Input/Output Format
+
+```Text
+Input:  "Max ( 5 3 9 )"
+Output: "9"
+
+Input:  "First ( 2 8 4 )"
+Output: "2"
+
+Input:  "Min ( 7 1 9 )"
+Output: "1"
+```
+
+### Operations to Support
+
+- **First(a, b, c)** → returns a
+- **Second(a, b, c)** → returns b
+- **Last(a, b, c)** → returns c
+- **Max(a, b, c)** → returns maximum
+- **Min(a, b, c)** → returns minimum
+
+### Why This Problem?
+
+- Deterministic (easy to verify correctness)
+- Tests positional understanding (First/Second/Last)
+- Tests value comparison (Max/Min)
+- Clean mapping to transformer capabilities
+- Easy to generate infinite training data
+
+## Architecture Specifications
+
+### Model Configuration
+
+```Text
+Vocabulary Size:    20 tokens
+Embedding Dim:      64
+Number of Layers:   2 transformer blocks
+Attention Heads:    4 per layer
+FFN Hidden Dim:     256 (4× embedding dim)
+Max Sequence Len:   50
+Dropout:            0.1
+```
+
+### Vocabulary Design
+
+```Text
+Special Tokens:
+  [PAD]  = 0  (padding for batching)
+  [EOS]  = 1  (end of sequence)
+
+Digits:
+  '0' = 2, '1' = 3, '2' = 4, '3' = 5, '4' = 6
+  '5' = 7, '6' = 8, '7' = 9, '8' = 10, '9' = 11
+
+Operations:
+  'First'  = 12
+  'Second' = 13
+  'Last'   = 14
+  'Max'    = 15
+  'Min'    = 16
+
+Syntax:
+  '(' = 17
+  ')' = 18
+  ',' = 19
+```
+
+### Model Architecture Flow
+
+```Text
+Input Tokens: [Max, (, 5, 3, 9, )]
+      ↓
+[1] Embedding Layer (20 → 64 dims)
+      ↓
+[2] Positional Encoding (add position info)
+      ↓
+[3] Transformer Block 1
+    - Multi-Head Attention (4 heads)
+    - Add & Norm
+    - Feed-Forward Network
+    - Add & Norm
+      ↓
+[4] Transformer Block 2
+    - Multi-Head Attention (4 heads)
+    - Add & Norm
+    - Feed-Forward Network
+    - Add & Norm
+      ↓
+[5] Output Projection (64 → 20 vocab)
+      ↓
+[6] Softmax → Probability Distribution
+      ↓
+Output: [9]
+```
+
+### Parameter Count Estimate
+
+```Text
+Embeddings:           20 × 64 = 1,280
+Positional Encodings: 50 × 64 = 3,200
+Transformer Block ×2:          98,816
+Output Layer:         64 × 20 = 1,280
+─────────────────────────────────────
+Total Parameters:              ~104,000
+```
+
+## Implementation Strategy
+
+### Phase 1: Data Pipeline
+
+- Vocabulary and tokenization
+- Training data generation
+- Batching and padding
+
+### Phase 2: Core Components
+
+- Embedding layer
+- Positional encoding
+- Layer normalization
+- Linear layer (matrix multiplication)
+
+### Phase 3: Attention Mechanism
+
+- Scaled dot-product attention
+- Multi-head attention
+- Attention masking (if needed)
+
+### Phase 4: Transformer Block
+
+- Feed-forward network
+- Residual connections
+- Complete transformer block assembly
+
+### Phase 5: Training
+
+- Forward pass
+- Loss calculation (cross-entropy)
+- Backpropagation
+- Optimization (SGD or Adam from scratch)
+
+### Phase 6: Evaluation & Visualization
+
+- Accuracy metrics
+- Attention visualization
+- Error analysis
+
+## Design Decisions
+
+### Choice: Direct Answer (Not Autoregressive)
+
+**Decision**: Use encoder-style with single-token prediction
+**Rationale**:
+
+- Simpler for learning transformer basics
+- Output is always single digit
+- Can add autoregressive later
+- Faster to train and debug
+
+### Choice: Sinusoidal Positional Encoding
+
+**Decision**: Use fixed sinusoidal encoding (not learned)
+**Rationale**:
+
+- Generalizes to any sequence length
+- One less thing to train
+- Standard in original Transformer paper
+
+### Choice: NumPy Only (No Framework)
+
+**Decision**: Implement everything from scratch with NumPy
+**Rationale**:
+
+- Forces understanding of every operation
+- See exactly what's happening
+- Learn backpropagation mechanics
+- Can add PyTorch later for comparison
+
+### Choice: Small Scale
+
+**Decision**: Keep model tiny (64 dims, 2 layers, ~100k params)
+**Rationale**:
+
+- Trains in minutes on CPU
+- Easy to debug
+- Can visualize all attention heads
+- Sufficient for toy problem
+
+## Training Strategy
+
+### Dataset Generation
+
+```python
+Size: 10,000 examples
+Split: 8,000 train / 1,000 val / 1,000 test
+Generation: Random operations with random digits
+Balance: Equal distribution of all 5 operations
+```
+
+### Training Hyperparameters
+
+```Text
+Batch Size:     32
+Learning Rate:  0.001
+Epochs:         50-100
+Optimizer:      Adam (implement from scratch)
+Loss:           Cross-Entropy
+```
+
+### Success Metrics
+
+- Training accuracy > 95%
+- Validation accuracy > 95%
+- Attention heads show interpretable patterns
+- Can visualize which positions model attends to
+
+## Testing & Validation
+
+### Unit Tests
+
+- Each component tested independently
+- Shape verification at each layer
+- Gradient flow verification
+
+### Integration Tests
+
+- Full forward pass
+- Full backward pass
+- Training loop convergence
+
+### Interpretability Analysis
+
+- Visualize attention weights
+- Check which heads learn what
+- Verify positional understanding
+
+## Future Extensions (After Basic Version Works)
+
+1. **Nested Operations**: `Max(First(2,8), Second(5,1))`
+2. **Arithmetic**: `Add(Max(3,7), First(2,9))`
+3. **Longer Sequences**: 5-10 arguments instead of 3
+4. **Autoregressive**: Convert to decoder-style
+5. **PyTorch Reimplementation**: Compare with framework version
+
+## Code Organization
+
+### Project Structure
+
+```Text
+llmlearn/
+├── src/
+│   ├── layers/              # Neural network layer implementations
+│   │   ├── __init__.py      # Package exports
+│   │   ├── embedding.py     # Token embedding layer
+│   │   ├── linear.py        # Fully connected (dense) layer
+│   │   ├── positional_encoding.py  # Sinusoidal position encoding
+│   │   ├── normalization.py # Layer normalization
+│   │   ├── activations.py   # ReLU and Softmax functions
+│   │   └── attention.py     # Scaled dot-product and multi-head attention
+│   ├── transformer.py       # Complete transformer architecture
+│   ├── loss.py              # Cross-entropy loss function
+│   ├── optimizer.py         # SGD and Adam optimizers
+│   ├── train_utils.py       # Training loop utilities
+│   ├── vocabluary.py        # Vocabulary and tokenization
+│   ├── data_generatpr.py    # Training data generation
+│   └── data_utils.py        # Batching, padding, DataLoader
+├── tests/
+│   ├── test_layers.py       # Core layer tests (Phase 2)
+│   ├── test_attention.py    # Attention mechanism tests (Phase 3)
+│   ├── test_transformer.py  # Transformer architecture tests (Phase 4)
+│   └── test_training.py     # Training infrastructure tests (Phase 5)
+├── design,md                # Architecture and design decisions
+├── tasks.md                 # Task breakdown and progress tracking
+└── README.md                # Project documentation
+```
+
+### Modular Design Rationale
+
+- **Separation of Concerns**: Each layer in its own file for clarity
+- **Comprehensive Documentation**: Every class and function extensively documented
+- **Design Explanations**: Comments explain WHY certain approaches were chosen
+- **Educational Focus**: Code prioritizes readability over optimization
+- **Test Coverage**: All components have unit tests with gradient verification
+
+## Tools & Dependencies
+
+```Python
+Required:
+  - Python 3.8+
+  - NumPy
+
+Optional (for visualization):
+  - Matplotlib (for attention heatmaps)
+  - Seaborn (for prettier plots)
+```
+
+## Expected Timeline
+
+```C
+Phase 1 (Data):           2-3 hours
+Phase 2 (Components):     4-6 hours
+Phase 3 (Attention):      4-6 hours
+Phase 4 (Transformer):    2-3 hours
+Phase 5 (Training):       4-6 hours
+Phase 6 (Evaluation):     2-3 hours
+─────────────────────────────────────
+Total:                    18-27 hours
+```
+
+## Key Learning Outcomes
+
+By completing this project, you will understand:
+
+- How tokens become embeddings
+- Why positional encoding is necessary
+- How attention mechanisms work (Q, K, V)
+- What multi-head attention achieves
+- How transformers compose representations
+- Backpropagation through complex architectures
+- Why transformers are so powerful
