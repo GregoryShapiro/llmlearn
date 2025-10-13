@@ -30,6 +30,7 @@ Implementation Details:
 """
 
 import numpy as np
+from typing import List, Tuple, Optional
 
 
 class Linear:
@@ -68,7 +69,7 @@ class Linear:
         >>> output = layer.forward(x)     # shape: (32, 64)
     """
 
-    def __init__(self, input_dim, output_dim, use_bias=True):
+    def __init__(self, input_dim: int, output_dim: int, use_bias: bool = True) -> None:
         """
         Initialize the linear layer with proper weight initialization.
 
@@ -132,7 +133,7 @@ class Linear:
         self.grad_weights = None
         self.grad_bias = None
 
-    def forward(self, x):
+    def forward(self, x: np.ndarray) -> np.ndarray:
         """
         Forward pass through the linear layer.
 
@@ -182,7 +183,7 @@ class Linear:
 
         return output
 
-    def backward(self, grad_output):
+    def backward(self, grad_output: np.ndarray) -> np.ndarray:
         """
         Backward pass through the linear layer.
 
@@ -251,7 +252,7 @@ class Linear:
 
         return grad_input
 
-    def get_parameters(self):
+    def get_parameters(self) -> List[Tuple[np.ndarray, Optional[np.ndarray]]]:
         """
         Get all trainable parameters and their gradients.
 
@@ -268,7 +269,7 @@ class Linear:
             params.append((self.bias, self.grad_bias))
         return params
 
-    def zero_grad(self):
+    def zero_grad(self) -> None:
         """
         Reset gradients to None.
 
@@ -278,6 +279,6 @@ class Linear:
         self.grad_weights = None
         self.grad_bias = None
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """String representation for debugging."""
         return f"Linear(input_dim={self.input_dim}, output_dim={self.output_dim}, use_bias={self.use_bias})"
