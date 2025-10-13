@@ -24,6 +24,7 @@ Implementation Details:
 """
 
 import numpy as np
+from typing import List, Tuple, Optional
 
 
 class Embedding:
@@ -58,7 +59,7 @@ class Embedding:
         >>> embedded = embedding.forward(tokens)  # shape: (2, 3, 8)
     """
 
-    def __init__(self, vocab_size, embed_dim):
+    def __init__(self, vocab_size: int, embed_dim: int) -> None:
         """
         Initialize the embedding layer.
 
@@ -92,7 +93,7 @@ class Embedding:
         # Gradient accumulator - same shape as embeddings
         self.grad_embeddings = None
 
-    def forward(self, token_indices):
+    def forward(self, token_indices: np.ndarray) -> np.ndarray:
         """
         Forward pass: lookup embeddings for token indices.
 
@@ -126,7 +127,7 @@ class Embedding:
 
         return output
 
-    def backward(self, grad_output):
+    def backward(self, grad_output: np.ndarray) -> None:
         """
         Backward pass: accumulate gradients for embedding vectors.
 
@@ -180,7 +181,7 @@ class Embedding:
         # and not differentiable. The gradient stops here.
         return None
 
-    def get_parameters(self):
+    def get_parameters(self) -> List[Tuple[np.ndarray, Optional[np.ndarray]]]:
         """
         Get all trainable parameters and their gradients.
 
@@ -193,7 +194,7 @@ class Embedding:
         """
         return [(self.embeddings, self.grad_embeddings)]
 
-    def zero_grad(self):
+    def zero_grad(self) -> None:
         """
         Reset gradients to None.
 
@@ -202,6 +203,6 @@ class Embedding:
         """
         self.grad_embeddings = None
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """String representation for debugging."""
         return f"Embedding(vocab_size={self.vocab_size}, embed_dim={self.embed_dim})"
