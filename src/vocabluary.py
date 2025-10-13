@@ -9,8 +9,10 @@ This allows the model to generalize to any number length, though we'll train
 primarily on 1-2 digit numbers initially.
 """
 
+from typing import Union, List, Dict
+
 # Define the vocabulary: token -> index mapping
-VOCAB = {
+VOCAB: Dict[str, int] = {
     # Special tokens
     '[PAD]': 0,   # Padding token for batching
     '[EOS]': 1,   # End of sequence token
@@ -41,36 +43,36 @@ VOCAB = {
 }
 
 # Create reverse vocabulary: index -> token mapping
-REVERSE_VOCAB = {idx: token for token, idx in VOCAB.items()}
+REVERSE_VOCAB: Dict[int, str] = {idx: token for token, idx in VOCAB.items()}
 
 # Vocabulary size
-VOCAB_SIZE = len(VOCAB)
+VOCAB_SIZE: int = len(VOCAB)
 
 
-def tokenize(sequence):
+def tokenize(sequence: Union[str, List[str]]) -> List[int]:
     """
     Convert a sequence of tokens (strings) to their integer indices.
-    
+
     For multi-digit numbers, each digit should be a separate token.
     Use tokenize_with_numbers() for automatic number splitting.
-    
+
     Args:
         sequence: List of string tokens, e.g., ['Max', '(', '5', ',', '3', ',', '9', ')']
                  or a single string token
-    
+
     Returns:
         List of integer indices corresponding to the tokens
-        
+
     Raises:
         KeyError: If a token is not in the vocabulary
-    
+
     Example:
         >>> tokenize(['Max', '(', '5', ',', '3', ',', '9', ')'])
         [15, 17, 7, 19, 5, 19, 11, 18]
-        
+
         >>> tokenize('Max')
         [15]
-        
+
         >>> tokenize(['2', '5'])  # Multi-digit: each digit separate
         [4, 7]
     """
@@ -90,23 +92,23 @@ def tokenize(sequence):
     return indices
 
 
-def detokenize(indices):
+def detokenize(indices: Union[int, List[int]]) -> List[str]:
     """
     Convert integer indices back to their string tokens.
-    
+
     Args:
         indices: List of integer indices or a single integer index
-    
+
     Returns:
         List of string tokens corresponding to the indices
-        
+
     Raises:
         KeyError: If an index is not in the reverse vocabulary
-    
+
     Example:
         >>> detokenize([15, 17, 7, 5, 11, 18])
         ['Max', '(', '5', '3', '9', ')']
-        
+
         >>> detokenize(15)
         ['Max']
     """
@@ -126,16 +128,16 @@ def detokenize(indices):
     return tokens
 
 
-def get_token_index(token):
+def get_token_index(token: str) -> int:
     """
     Get the index of a single token.
-    
+
     Args:
         token: String token
-        
+
     Returns:
         Integer index
-        
+
     Example:
         >>> get_token_index('Max')
         15
@@ -145,16 +147,16 @@ def get_token_index(token):
     return VOCAB[token]
 
 
-def get_token_from_index(index):
+def get_token_from_index(index: int) -> str:
     """
     Get the token corresponding to an index.
-    
+
     Args:
         index: Integer index
-        
+
     Returns:
         String token
-        
+
     Example:
         >>> get_token_from_index(15)
         'Max'
@@ -164,16 +166,16 @@ def get_token_from_index(index):
     return REVERSE_VOCAB[index]
 
 
-def is_valid_token(token):
+def is_valid_token(token: str) -> bool:
     """
     Check if a token exists in the vocabulary.
-    
+
     Args:
         token: String token to check
-        
+
     Returns:
         Boolean indicating if token is valid
-        
+
     Example:
         >>> is_valid_token('Max')
         True
@@ -183,16 +185,16 @@ def is_valid_token(token):
     return token in VOCAB
 
 
-def is_valid_index(index):
+def is_valid_index(index: int) -> bool:
     """
     Check if an index exists in the reverse vocabulary.
-    
+
     Args:
         index: Integer index to check
-        
+
     Returns:
         Boolean indicating if index is valid
-        
+
     Example:
         >>> is_valid_index(15)
         True
@@ -202,26 +204,26 @@ def is_valid_index(index):
     return index in REVERSE_VOCAB
 
 
-def tokenize_with_numbers(sequence):
+def tokenize_with_numbers(sequence: List[Union[str, int]]) -> List[int]:
     """
     Tokenize a sequence, automatically splitting multi-digit numbers into individual digits.
-    
+
     This is a convenience function that handles numbers (integers) by breaking them
     into individual digit characters before tokenization.
-    
+
     Args:
         sequence: List of tokens where numbers can be integers or strings
                  e.g., ['Max', '(', 25, ',', 3, ',', 9, ')']
                  or ['Max', '(', '25', ',', '3', ',', '9', ')']
-    
+
     Returns:
         List of integer indices with multi-digit numbers split
-        
+
     Example:
         >>> tokenize_with_numbers(['Max', '(', 25, ',', 13, ',', 9, ')'])
         [15, 17, 4, 7, 19, 3, 5, 19, 11, 18]
         # 25 → ['2', '5'], 13 → ['1', '3'], 9 → ['9']
-        
+
         >>> tokenize_with_numbers(['First', '(', 7, ',', 42, ',', 99, ')'])
         [12, 17, 9, 19, 6, 4, 19, 11, 11, 18]
         # 7 → ['7'], 42 → ['4', '2'], 99 → ['9', '9']
@@ -242,21 +244,21 @@ def tokenize_with_numbers(sequence):
     return tokenize(expanded_sequence)
 
 
-def detokenize_with_numbers(indices, reconstruct_numbers=False):
+def detokenize_with_numbers(indices: List[int], reconstruct_numbers: bool = False) -> List[str]:
     """
     Detokenize indices back to tokens, optionally reconstructing multi-digit numbers.
-    
+
     Args:
         indices: List of integer indices
         reconstruct_numbers: If True, consecutive digit tokens are merged into multi-digit numbers
-        
+
     Returns:
         List of string tokens
-        
+
     Example:
         >>> detokenize_with_numbers([15, 17, 4, 7, 19, 11, 18])
         ['Max', '(', '2', '5', ',', '9', ')']
-        
+
         >>> detokenize_with_numbers([15, 17, 4, 7, 19, 11, 18], reconstruct_numbers=True)
         ['Max', '(', '25', ',', '9', ')']
     """
