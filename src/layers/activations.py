@@ -25,6 +25,7 @@ Alternative Activations (not implemented here):
 
 import numpy as np
 
+from typing import List, Tuple, Optional
 
 class ReLU:
     """
@@ -65,7 +66,7 @@ class ReLU:
         >>> output = relu.forward(x)  # [0, 0, 0, 1, 2]
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize ReLU activation.
 
@@ -73,7 +74,7 @@ class ReLU:
         """
         self.input_cache = None
 
-    def forward(self, x):
+    def forward(self, x: np.ndarray) -> np.ndarray:
         """
         Forward pass through ReLU.
 
@@ -105,7 +106,7 @@ class ReLU:
 
         return output
 
-    def backward(self, grad_output):
+    def backward(self, grad_output: np.ndarray) -> np.ndarray:
         """
         Backward pass through ReLU.
 
@@ -138,7 +139,7 @@ class ReLU:
 
         return grad_input
 
-    def get_parameters(self):
+    def get_parameters(self) -> List[Tuple[np.ndarray, Optional[np.ndarray]]]:
         """
         Get trainable parameters.
 
@@ -147,11 +148,11 @@ class ReLU:
         """
         return []
 
-    def zero_grad(self):
+    def zero_grad(self) -> None:
         """No gradients to reset (no parameters)."""
         pass
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """String representation for debugging."""
         return "ReLU()"
 
@@ -200,7 +201,7 @@ class Softmax:
         >>> # Largest logit (3.0) gets highest probability (0.67)
     """
 
-    def __init__(self, axis=-1):
+    def __init__(self, axis: int = -1) -> None:
         """
         Initialize Softmax.
 
@@ -211,7 +212,7 @@ class Softmax:
         self.axis = axis
         self.output_cache = None
 
-    def forward(self, x):
+    def forward(self, x: np.ndarray) -> np.ndarray:
         """
         Forward pass through softmax.
 
@@ -254,7 +255,7 @@ class Softmax:
 
         return output
 
-    def backward(self, grad_output):
+    def backward(self, grad_output: np.ndarray) -> np.ndarray:
         """
         Backward pass through softmax.
 
@@ -304,7 +305,7 @@ class Softmax:
 
         return grad_input
 
-    def get_parameters(self):
+    def get_parameters(self) -> List[Tuple[np.ndarray, Optional[np.ndarray]]]:
         """
         Get trainable parameters.
 
@@ -313,10 +314,10 @@ class Softmax:
         """
         return []
 
-    def zero_grad(self):
+    def zero_grad(self) -> None:
         """No gradients to reset (no parameters)."""
         pass
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """String representation for debugging."""
         return f"Softmax(axis={self.axis})"

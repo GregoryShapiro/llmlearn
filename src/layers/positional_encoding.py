@@ -44,6 +44,7 @@ Alternative Approaches:
       Pros: Better long-range performance, Cons: More complex implementation
 """
 
+from typing import List, Tuple, Optional
 import numpy as np
 
 
@@ -72,7 +73,7 @@ class PositionalEncoding:
         >>> with_position = pos_enc.forward(embedded)  # adds positional information
     """
 
-    def __init__(self, max_seq_len, embed_dim):
+    def __init__(self, max_seq_len: int, embed_dim: int) -> None:
         """
         Initialize positional encoding.
 
@@ -94,7 +95,7 @@ class PositionalEncoding:
         # Shape: (max_seq_len, embed_dim)
         self.encodings = self._create_positional_encodings()
 
-    def _create_positional_encodings(self):
+    def _create_positional_encodings(self) -> np.ndarray:
         """
         Create sinusoidal positional encodings.
 
@@ -145,7 +146,7 @@ class PositionalEncoding:
 
         return encodings
 
-    def forward(self, embedded_tokens):
+    def forward(self, embedded_tokens: np.ndarray) -> np.ndarray:
         """
         Add positional encodings to embedded tokens.
 
@@ -192,7 +193,7 @@ class PositionalEncoding:
 
         return output
 
-    def backward(self, grad_output):
+    def backward(self, grad_output: np.ndarray) -> np.ndarray:
         """
         Backward pass for positional encoding.
 
@@ -217,7 +218,7 @@ class PositionalEncoding:
         # Since p is not learnable, we only care about dL/dx, which equals grad_output
         return grad_output
 
-    def get_parameters(self):
+    def get_parameters(self) -> List[Tuple[np.ndarray, Optional[np.ndarray]]]:
         """
         Get trainable parameters.
 
@@ -230,7 +231,7 @@ class PositionalEncoding:
         """
         return []
 
-    def zero_grad(self):
+    def zero_grad(self) -> None:
         """
         Reset gradients.
 
@@ -239,6 +240,6 @@ class PositionalEncoding:
         """
         pass
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """String representation for debugging."""
         return f"PositionalEncoding(max_seq_len={self.max_seq_len}, embed_dim={self.embed_dim})"

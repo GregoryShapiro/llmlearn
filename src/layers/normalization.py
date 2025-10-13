@@ -47,6 +47,7 @@ Implementation Note:
 """
 
 import numpy as np
+from typing import List, Tuple, Optional, Union
 
 
 class LayerNorm:
@@ -77,7 +78,7 @@ class LayerNorm:
         >>> # Each token is normalized independently across its 64 features
     """
 
-    def __init__(self, normalized_shape, eps=1e-5):
+    def __init__(self, normalized_shape: Union[int, Tuple[int, ...]], eps: float = 1e-5) -> None:
         """
         Initialize layer normalization.
 
@@ -113,7 +114,7 @@ class LayerNorm:
         self.grad_gamma = None
         self.grad_beta = None
 
-    def forward(self, x):
+    def forward(self, x: np.ndarray) -> np.ndarray:
         """
         Forward pass through layer normalization.
 
@@ -166,7 +167,7 @@ class LayerNorm:
 
         return output
 
-    def backward(self, grad_output):
+    def backward(self, grad_output: np.ndarray) -> np.ndarray:
         """
         Backward pass through layer normalization.
 
@@ -252,7 +253,7 @@ class LayerNorm:
 
         return grad_input
 
-    def get_parameters(self):
+    def get_parameters(self) -> List[Tuple[np.ndarray, Optional[np.ndarray]]]:
         """
         Get trainable parameters and their gradients.
 
@@ -267,7 +268,7 @@ class LayerNorm:
             (self.beta, self.grad_beta)
         ]
 
-    def zero_grad(self):
+    def zero_grad(self) -> None:
         """
         Reset gradients to None.
 
@@ -276,6 +277,6 @@ class LayerNorm:
         self.grad_gamma = None
         self.grad_beta = None
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """String representation for debugging."""
         return f"LayerNorm(normalized_shape={self.normalized_shape}, eps={self.eps})"
