@@ -1,0 +1,165 @@
+================================================================================
+DETAILED DIGIT CORRELATION MATRIX
+================================================================================
+
+Correlation Matrix (with interpretation):
+--------------------------------------------------------------------------------
+
+Digit 0:
+  0 <-> 1:  0.1509  [SIMILAR]
+  0 <-> 2:  0.0502  [neutral]
+  0 <-> 3:  0.0836  [neutral]
+  0 <-> 4: -0.0330  [neutral]
+  0 <-> 5: -0.2236  [dissimilar]
+  0 <-> 6: -0.1022  [dissimilar]
+  0 <-> 7: -0.0569  [neutral]
+  0 <-> 8: -0.2511  [OPPOSITE]
+  0 <-> 9: -0.4802  [OPPOSITE]
+
+Digit 1:
+  1 <-> 0:  0.1509  [SIMILAR]
+  1 <-> 2: -0.2174  [dissimilar]
+  1 <-> 3: -0.0095  [neutral]
+  1 <-> 4: -0.0602  [neutral]
+  1 <-> 5:  0.0424  [neutral]
+  1 <-> 6: -0.1850  [dissimilar]
+  1 <-> 7: -0.2268  [dissimilar]
+  1 <-> 8: -0.1796  [dissimilar]
+  1 <-> 9: -0.0027  [neutral]
+
+Digit 2:
+  2 <-> 0:  0.0502  [neutral]
+  2 <-> 1: -0.2174  [dissimilar]
+  2 <-> 3: -0.2428  [dissimilar]
+  2 <-> 4: -0.1559  [dissimilar]
+  2 <-> 5: -0.1411  [dissimilar]
+  2 <-> 6: -0.1218  [dissimilar]
+  2 <-> 7:  0.0211  [neutral]
+  2 <-> 8:  0.0754  [neutral]
+  2 <-> 9: -0.1035  [dissimilar]
+
+Digit 3:
+  3 <-> 0:  0.0836  [neutral]
+  3 <-> 1: -0.0095  [neutral]
+  3 <-> 2: -0.2428  [dissimilar]
+  3 <-> 4: -0.0566  [neutral]
+  3 <-> 5: -0.2566  [OPPOSITE]
+  3 <-> 6: -0.1555  [dissimilar]
+  3 <-> 7:  0.1061  [neutral]
+  3 <-> 8:  0.0812  [neutral]
+  3 <-> 9: -0.0861  [neutral]
+
+Digit 4:
+  4 <-> 0: -0.0330  [neutral]
+  4 <-> 1: -0.0602  [neutral]
+  4 <-> 2: -0.1559  [dissimilar]
+  4 <-> 3: -0.0566  [neutral]
+  4 <-> 5: -0.0849  [neutral]
+  4 <-> 6: -0.1228  [dissimilar]
+  4 <-> 7: -0.3306  [OPPOSITE]
+  4 <-> 8:  0.0807  [neutral]
+  4 <-> 9:  0.1297  [neutral]
+
+Digit 5:
+  5 <-> 0: -0.2236  [dissimilar]
+  5 <-> 1:  0.0424  [neutral]
+  5 <-> 2: -0.1411  [dissimilar]
+  5 <-> 3: -0.2566  [OPPOSITE]
+  5 <-> 4: -0.0849  [neutral]
+  5 <-> 6:  0.1188  [neutral]
+  5 <-> 7: -0.1743  [dissimilar]
+  5 <-> 8: -0.0072  [neutral]
+  5 <-> 9: -0.1273  [dissimilar]
+
+Digit 6:
+  6 <-> 0: -0.1022  [dissimilar]
+  6 <-> 1: -0.1850  [dissimilar]
+  6 <-> 2: -0.1218  [dissimilar]
+  6 <-> 3: -0.1555  [dissimilar]
+  6 <-> 4: -0.1228  [dissimilar]
+  6 <-> 5:  0.1188  [neutral]
+  6 <-> 7: -0.0638  [neutral]
+  6 <-> 8: -0.3783  [OPPOSITE]
+  6 <-> 9:  0.1450  [neutral]
+
+Digit 7:
+  7 <-> 0: -0.0569  [neutral]
+  7 <-> 1: -0.2268  [dissimilar]
+  7 <-> 2:  0.0211  [neutral]
+  7 <-> 3:  0.1061  [neutral]
+  7 <-> 4: -0.3306  [OPPOSITE]
+  7 <-> 5: -0.1743  [dissimilar]
+  7 <-> 6: -0.0638  [neutral]
+  7 <-> 8:  0.1977  [SIMILAR]
+  7 <-> 9: -0.0001  [neutral]
+
+Digit 8:
+  8 <-> 0: -0.2511  [OPPOSITE]
+  8 <-> 1: -0.1796  [dissimilar]
+  8 <-> 2:  0.0754  [neutral]
+  8 <-> 3:  0.0812  [neutral]
+  8 <-> 4:  0.0807  [neutral]
+  8 <-> 5: -0.0072  [neutral]
+  8 <-> 6: -0.3783  [OPPOSITE]
+  8 <-> 7:  0.1977  [SIMILAR]
+  8 <-> 9:  0.0842  [neutral]
+
+Digit 9:
+  9 <-> 0: -0.4802  [OPPOSITE]
+  9 <-> 1: -0.0027  [neutral]
+  9 <-> 2: -0.1035  [dissimilar]
+  9 <-> 3: -0.0861  [neutral]
+  9 <-> 4:  0.1297  [neutral]
+  9 <-> 5: -0.1273  [dissimilar]
+  9 <-> 6:  0.1450  [neutral]
+  9 <-> 7: -0.0001  [neutral]
+  9 <-> 8:  0.0842  [neutral]
+
+================================================================================
+CORRELATION vs NUMERIC DISTANCE
+================================================================================
+
+Distance 1 (e.g., 0<->1):  Average similarity = -0.0127  (18 pairs)
+  Top: 7<->8:  0.1977
+  Top: 8<->7:  0.1977
+  Top: 0<->1:  0.1509
+
+Distance 2 (e.g., 0<->2):  Average similarity = -0.1309  (16 pairs)
+  Top: 0<->2:  0.0502
+  Top: 2<->0:  0.0502
+  Top: 7<->9: -0.0001
+
+Distance 3 (e.g., 0<->3):  Average similarity = -0.0666  (14 pairs)
+  Top: 6<->9:  0.1450
+  Top: 9<->6:  0.1450
+  Top: 0<->3:  0.0836
+
+Distance 4 (e.g., 0<->4):  Average similarity = -0.0088  (12 pairs)
+  Top: 3<->7:  0.1061
+  Top: 7<->3:  0.1061
+  Top: 4<->8:  0.0807
+
+Distance 5 (e.g., 0<->5):  Average similarity = -0.0353  (10 pairs)
+  Top: 4<->9:  0.1297
+  Top: 9<->4:  0.1297
+  Top: 3<->8:  0.0812
+
+Distance 6 (e.g., 0<->6):  Average similarity = -0.0849  (8 pairs)
+  Top: 2<->8:  0.0754
+  Top: 8<->2:  0.0754
+  Top: 3<->9: -0.0861
+
+Distance 7 (e.g., 0<->7):  Average similarity = -0.1133  (6 pairs)
+  Top: 0<->7: -0.0569
+  Top: 7<->0: -0.0569
+  Top: 2<->9: -0.1035
+
+Distance 8 (e.g., 0<->8):  Average similarity = -0.1269  (4 pairs)
+  Top: 1<->9: -0.0027
+  Top: 9<->1: -0.0027
+  Top: 0<->8: -0.2511
+
+Distance 9 (e.g., 0<->9):  Average similarity = -0.4802  (2 pairs)
+  Top: 0<->9: -0.4802
+  Top: 9<->0: -0.4802
+

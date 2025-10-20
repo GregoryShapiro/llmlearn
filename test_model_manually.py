@@ -9,11 +9,12 @@ sys.path.insert(0, 'src')
 
 import numpy as np
 import pickle
+import re
 
 from vocabluary import VOCAB, REVERSE_VOCAB, tokenize_with_numbers, detokenize
 from transformer import Transformer
 
-def load_trained_model(checkpoint_path='checkpoints/best_model_run2.pkl'):
+def load_trained_model(checkpoint_path='checkpoints/best_model.pkl'):
     """Load a trained model from checkpoint."""
     print(f"Loading model from {checkpoint_path}...")
     
@@ -117,44 +118,88 @@ def print_detailed_prediction(model, operation, num1, num2, num3, correct_answer
     
     return is_correct
 
+def parse_input(user_input):
+    """
+    Parse user input to extract operation and numbers.
+
+    Supports formats:
+    - Max(5,8,3)
+    - Max(23, 212, 11)
+    - Max (5, 8, 3)
+
+    Returns:
+        Tuple of (operation, num1, num2, num3) or None if invalid
+    """
+    user_input = user_input.strip()
+
+    # Pattern: Operation(num1, num2, num3) with optional spaces
+    pattern = r'^\s*([A-Za-z]+)\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*$'
+    match = re.match(pattern, user_input)
+
+    if match:
+        operation = match.group(1).capitalize()
+        num1 = int(match.group(2))
+        num2 = int(match.group(3))
+        num3 = int(match.group(4))
+        return operation, num1, num2, num3
+
+    return None
+
+
 def interactive_mode(model):
     """Interactive testing mode."""
     print("\n" + "=" * 70)
     print("INTERACTIVE MODE")
     print("=" * 70)
     print("\nTest your model interactively!")
-    print("Operations: First, Second, Last, Max, Min")
-    print("Numbers: 0-9")
-    print("Type 'quit' to exit\n")
-    
+    print("\nUsage:")
+    print("  Enter expressions in the format: Operation(num1, num2, num3)")
+    print("\nExamples:")
+    print("  Max(5, 8, 3)")
+    print("  First(23, 212, 11)")
+    print("  Min(0, 9, 4)")
+    print("\nSupported operations: First, Second, Last, Max, Min")
+    print("Type 'quit' or 'exit' to exit\n")
+    print("-" * 70)
+
     while True:
         try:
-            # Get operation
-            operation = input("Operation (First/Second/Last/Max/Min): ").strip()
-            if operation.lower() == 'quit':
+            # Get input
+            user_input = input("\n> ").strip()
+
+            # Check for exit
+            if user_input.lower() in ['quit', 'exit', 'q']:
                 break
-            
+
+            if not user_input:
+                continue
+
+            # Parse input
+            result = parse_input(user_input)
+
+            if result is None:
+                print("❌ Invalid format!")
+                print("   Expected: Operation(num1, num2, num3)")
+                print("   Example: Max(5, 8, 3)")
+                continue
+
+            operation, num1, num2, num3 = result
+
+            # Validate operation
             if operation not in ['First', 'Second', 'Last', 'Max', 'Min']:
-                print("Invalid operation! Use: First, Second, Last, Max, or Min")
+                print(f"❌ Invalid operation: '{operation}'")
+                print("   Supported: First, Second, Last, Max, Min")
                 continue
-            
-            # Get numbers
-            num1 = int(input("Number 1 (0-9): "))
-            num2 = int(input("Number 2 (0-9): "))
-            num3 = int(input("Number 3 (0-9): "))
-            
-            if not all(0 <= n <= 9 for n in [num1, num2, num3]):
-                print("Numbers must be between 0 and 9!")
-                continue
-            
+
             # Make prediction
             print_detailed_prediction(model, operation, num1, num2, num3)
-            
+
         except KeyboardInterrupt:
             print("\n\nExiting...")
             break
         except Exception as e:
-            print(f"Error: {e}")
+            print(f"❌ Error: {e}")
+            print("   Try format: Operation(num1, num2, num3)")
             continue
 
 def batch_test_mode(model):
@@ -207,8 +252,8 @@ def main():
     print("TRAINED MODEL MANUAL TESTING")
     print("=" * 70)
     
-    # Load model
-    model = load_trained_model('checkpoints/best_model_run2.pkl')
+    # Load model (default: most recently trained)
+    model = load_trained_model('checkpoints/best_model.pkl')
     
     print("\n" + "=" * 70)
     print("TESTING MODES")

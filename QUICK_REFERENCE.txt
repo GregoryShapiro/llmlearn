@@ -1,0 +1,51 @@
+================================================================================
+TRANSFORMER MODEL TESTING - QUICK REFERENCE
+================================================================================
+
+RUN THE SCRIPT:
+  python3 test_model_manually.py
+
+SELECT MODE:
+  1 = Interactive (type your own examples)
+  2 = Batch test (14 predefined examples)
+  3 = Quick test (single Max(7,3,9) example)
+
+INTERACTIVE MODE USAGE:
+  > Max(5, 8, 3)
+  > First(0, 9, 4)
+  > Min(7, 1, 2)
+  > quit
+
+SUPPORTED OPERATIONS:
+  First  - Returns first argument
+  Second - Returns second argument
+  Last   - Returns third argument
+  Max    - Returns maximum value
+  Min    - Returns minimum value
+
+IMPORTANT: SINGLE DIGITS ONLY (0-9)
+  ✓ Works:     Max(5, 8, 3)
+  ✗ Won't work: Max(23, 212, 11)
+
+INPUT FORMATS (all work):
+  Max(5,8,3)
+  Max(5, 8, 3)
+  Max (5, 8, 3)
+  first(1,2,3)    # auto-capitalizes
+  
+EXIT COMMANDS:
+  quit, exit, q
+
+AVAILABLE MODELS:
+  checkpoints/best_model.pkl       (default - just trained)
+  checkpoints/best_model_run1.pkl  (93.5% accuracy)
+  checkpoints/best_model_run2.pkl  (99.2% accuracy)
+
+TO CHANGE MODEL:
+  Edit line 17 in test_model_manually.py
+
+EXPECTED ACCURACY:
+  Single digits (0-9): 93-99%
+  Multi-digit:         Unpredictable (not trained on)
+
+================================================================================
