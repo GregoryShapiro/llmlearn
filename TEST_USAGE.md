@@ -117,9 +117,12 @@ Exiting...
 
 ---
 
-## Why Multi-Digit Numbers May Fail
+## Number Range Depends on Model
 
-**Important Note:** The model was trained on **single-digit numbers only (0-9)**.
+**Important Note:** There are two models available with different training ranges.
+
+### Single-Digit Model (0-9)
+The default `best_model.pkl` was trained on **single-digit numbers only (0-9)**.
 
 When you input multi-digit numbers like `Max(23, 212, 11)`:
 - The tokenizer splits them into individual digits: `2`, `3`, `2`, `1`, `2`, `1`, `1`
@@ -134,7 +137,37 @@ When you input multi-digit numbers like `Max(23, 212, 11)`:
 **Example:**
 ```
 Max(5, 8, 3)      → Works great! ✓
-Max(23, 212, 11)  → Won't work correctly ✗
+Max(23, 45, 89)   → Won't work correctly ✗
+```
+
+### Double-Digit Model (0-99)
+The `best_model_double_digits.pkl` was trained on **double-digit numbers (0-99)**.
+
+This model handles numbers up to 99 correctly:
+- Input: `Max(23, 45, 89)` is properly tokenized and understood
+- Sequence: `Max ( 2 3 , 4 5 , 8 9 )` with dynamic max_length handling
+- Model learned to handle variable-length token sequences
+
+**Expected behavior:**
+- ✅ **Numbers 0-99**: Model performs well (~84% accuracy)
+- ❌ **Numbers 100+**: Out of distribution, unpredictable results
+
+**Example:**
+```
+Max(23, 45, 89)    → Works well! ✓
+Max(5, 8, 3)       → Also works! ✓
+Max(212, 345, 111) → Won't work correctly ✗
+```
+
+### How to Use Double-Digit Model
+
+Edit line 17 in `test_model_manually.py`:
+```python
+# Change from:
+def load_trained_model(checkpoint_path='checkpoints/best_model.pkl'):
+
+# To:
+def load_trained_model(checkpoint_path='checkpoints/best_model_double_digits.pkl'):
 ```
 
 ---

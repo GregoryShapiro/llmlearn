@@ -37,11 +37,17 @@ Output: "2"
 
 ### 🎯 **Trained Models Available!**
 
-Two pre-trained models are ready to test:
+Multiple pre-trained models are ready to test:
+
+**Single-Digit Models (0-9):**
 - **Run 1**: 93.5% test accuracy (seed=42)
-- **Run 2**: 99.2% test accuracy (seed=123) ⭐ Best
+- **Run 2**: 99.2% test accuracy (seed=123) ⭐ Best for single digits
+
+**Double-Digit Model (0-99):**
+- **best_model_double_digits.pkl**: 83.7% test accuracy - handles numbers 0-99!
 
 See [QUICK_START_TESTING.md](QUICK_START_TESTING.md) for how to use them.
+See [DOUBLE_DIGIT_TRAINING.md](DOUBLE_DIGIT_TRAINING.md) for double-digit training details.
 
 ## Architecture
 
@@ -113,9 +119,13 @@ python3 train_step_by_step.py --size medium --epochs 20
 
 # Train with large dataset (~100K examples) - takes 2-3 hours
 python3 train_step_by_step.py --size large --epochs 50 --no-interactive
+
+# Train on double-digit numbers (0-99 range)
+python3 train_double_digits.py
 ```
 
 See [TRAINING_GUIDE.md](TRAINING_GUIDE.md) for detailed training instructions.
+See [DOUBLE_DIGIT_TRAINING.md](DOUBLE_DIGIT_TRAINING.md) for double-digit training details.
 
 **Manual Option:** Create a custom training script (e.g., `train.py`):
 
@@ -364,10 +374,12 @@ llmlearn/
 │   ├── test_training.py     # Training infrastructure tests
 │   └── test_integration.py  # End-to-end integration test
 ├── train_step_by_step.py    # Interactive training script
+├── train_double_digits.py   # Double-digit training (0-99)
 ├── test_model_manually.py   # Manual model testing tool
 ├── design.md                # Architecture and design decisions
 ├── tasks.md                 # Task breakdown and progress
 ├── TRAINING_GUIDE.md        # Detailed training instructions
+├── DOUBLE_DIGIT_TRAINING.md # Double-digit training guide
 ├── MANUAL_TESTING.md        # Testing guide
 ├── QUICK_START_TESTING.md   # Quick testing reference
 └── README.md                # This file

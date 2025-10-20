@@ -23,29 +23,36 @@ SUPPORTED OPERATIONS:
   Max    - Returns maximum value
   Min    - Returns minimum value
 
-IMPORTANT: SINGLE DIGITS ONLY (0-9)
-  ✓ Works:     Max(5, 8, 3)
-  ✗ Won't work: Max(23, 212, 11)
+NUMBER RANGE DEPENDS ON MODEL:
+  Single-digit model (0-9):
+    ✓ Works:     Max(5, 8, 3)
+    ✗ Won't work: Max(23, 45, 89)
+
+  Double-digit model (0-99):
+    ✓ Works:     Max(23, 45, 89)
+    ✗ Won't work: Max(212, 345, 111)
 
 INPUT FORMATS (all work):
   Max(5,8,3)
   Max(5, 8, 3)
   Max (5, 8, 3)
   first(1,2,3)    # auto-capitalizes
-  
+
 EXIT COMMANDS:
   quit, exit, q
 
 AVAILABLE MODELS:
-  checkpoints/best_model.pkl       (default - just trained)
-  checkpoints/best_model_run1.pkl  (93.5% accuracy)
-  checkpoints/best_model_run2.pkl  (99.2% accuracy)
+  checkpoints/best_model.pkl               (single-digit, 93-99% accuracy)
+  checkpoints/best_model_double_digits.pkl (0-99 range, 84% accuracy)
+  checkpoints/best_model_run1.pkl          (single-digit, 93.5% accuracy)
+  checkpoints/best_model_run2.pkl          (single-digit, 99.2% accuracy)
 
 TO CHANGE MODEL:
   Edit line 17 in test_model_manually.py
 
 EXPECTED ACCURACY:
-  Single digits (0-9): 93-99%
-  Multi-digit:         Unpredictable (not trained on)
+  Single-digit model (0-9):     93-99%
+  Double-digit model (0-99):    ~84%
+  Out-of-range numbers:         Unpredictable
 
 ================================================================================
