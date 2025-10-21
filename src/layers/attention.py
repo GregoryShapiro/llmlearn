@@ -440,7 +440,12 @@ class MultiHeadAttention:
             # mask shape: (batch, seq_len, seq_len) or (batch, 1, seq_len, seq_len)
             # Expand to (batch, num_heads, seq_len, seq_len)
             if mask.ndim == 3:
-                mask = mask[:, np.newaxis, :, :]  # Add head dimension
+                mask = mask[:, np.newaxis, :, :]  # Add head dimension: (batch, 1, seq_len, seq_len)
+
+            # Broadcast to all heads: (batch, 1, seq_len, seq_len) -> (batch, num_heads, seq_len, seq_len)
+            if mask.shape[1] == 1:
+                mask = np.repeat(mask, self.num_heads, axis=1)
+
             mask_reshaped = mask.reshape(batch_size * self.num_heads, seq_len, seq_len)
 
         # Compute attention

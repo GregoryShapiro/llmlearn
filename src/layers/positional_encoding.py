@@ -142,7 +142,8 @@ class PositionalEncoding:
         encodings[:, 0::2] = np.sin(position * div_term)
 
         # Apply cos to odd indices (1, 3, 5, ...)
-        encodings[:, 1::2] = np.cos(position * div_term)
+        # Handle odd embed_dim by only filling up to the available odd positions
+        encodings[:, 1::2] = np.cos(position * div_term[:encodings[:, 1::2].shape[1]])
 
         return encodings
 
