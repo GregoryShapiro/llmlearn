@@ -350,6 +350,17 @@ self.last_attention_weights = attention_weights  # Save for visualization
 
 ```
 llmlearn/
+├── lessons/                 # 📚 9-lesson educational series (START HERE!)
+│   ├── README.md            # Lesson overview and learning path
+│   ├── lesson_01_*.md       # Embeddings & positional encoding
+│   ├── lesson_02_*.md       # Attention mechanism
+│   ├── lesson_03_*.md       # Residual connections, LayerNorm, FFN
+│   ├── lesson_04_*.md       # Transformer block stacking
+│   ├── lesson_05_*.md       # Output projection
+│   ├── lesson_06_*.md       # Softmax & loss calculation
+│   ├── lesson_07_*.md       # Backpropagation
+│   ├── lesson_08_*.md       # Training loop & optimizers
+│   └── lesson_09_*.md       # Training dynamics over time
 ├── src/
 │   ├── layers/              # Neural network components
 │   │   ├── embedding.py     # Token embeddings
@@ -359,6 +370,7 @@ llmlearn/
 │   │   ├── activations.py   # ReLU and Softmax
 │   │   └── attention.py     # Multi-head attention
 │   ├── transformer.py       # Complete transformer model
+│   ├── transformer_decoder.py # GPT-style decoder variant
 │   ├── loss.py              # Cross-entropy loss
 │   ├── optimizer.py         # SGD and Adam optimizers
 │   ├── train_utils.py       # Training loop utilities
@@ -413,7 +425,29 @@ llmlearn/
 
 ## Learning Resources
 
-This implementation is designed for learning. Key concepts explained:
+### 📚 Complete Lesson Series
+
+**New!** This project includes a **comprehensive 9-lesson series** that takes you from basic concepts to complete understanding of transformer architecture.
+
+👉 **Start here:** [lessons/README.md](lessons/README.md)
+
+**Quick overview of lessons:**
+
+| # | Lesson | Topics | Time |
+|---|--------|--------|------|
+| 01 | [Embeddings & Positional Encoding](lessons/lesson_01_embeddings_and_positional_encoding.md) | Token embeddings, sinusoidal encoding | 2h |
+| 02 | [Attention Mechanism](lessons/lesson_02_attention_mechanism.md) | Scaled dot-product, multi-head attention | 2.5h |
+| 03 | [Residual, LayerNorm & FFN](lessons/lesson_03_residual_layernorm_ffn.md) | Add & Norm pattern, feed-forward networks | 2h |
+| 04 | [Transformer Block 2](lessons/lesson_04_transformer_block_2.md) | Stacking blocks, hierarchical learning | 1h |
+| 05 | [Output Projection](lessons/lesson_05_output_projection.md) | From representations to predictions | 1h |
+| 06 | [Softmax & Loss](lessons/lesson_06_softmax_and_loss.md) | Probability distributions, cross-entropy | 1h |
+| 07 | [Backpropagation](lessons/lesson_07_backpropagation.md) | Gradients through all layers | 2h |
+| 08 | [Training Loop](lessons/lesson_08_training_loop.md) | SGD, Adam optimizer, mini-batches | 1.5h |
+| 09 | [Training Dynamics](lessons/lesson_09_training_dynamics.md) | How the model learns over time | 2h |
+
+**Total:** ~15 hours of in-depth material covering 12 stages of the transformer pipeline.
+
+### Key Concepts Explained
 
 1. **Embeddings** - How tokens become vectors
 2. **Positional Encoding** - Why position matters
@@ -423,7 +457,14 @@ This implementation is designed for learning. Key concepts explained:
 6. **Residual Connections** - Enabling gradient flow
 7. **Adam Optimizer** - Adaptive learning rates per parameter
 
-See `design.md` for detailed architecture explanations.
+### Additional Documentation
+
+- **[lessons/](lessons/)** - Complete 9-lesson educational series (recommended starting point)
+- **[design.md](design.md)** - Architecture decisions and design rationale
+- **[CLAUDE.md](CLAUDE.md)** - Guide for AI assistants working with this codebase
+- **[TRAINING_GUIDE.md](TRAINING_GUIDE.md)** - Detailed training instructions
+- **[MANUAL_TESTING.md](MANUAL_TESTING.md)** - Interactive model testing guide
+- **[HOW_REAL_LLMS_WORK.md](HOW_REAL_LLMS_WORK.md)** - Comparison to production LLMs (GPT, BERT)
 
 ## Expected Results
 
