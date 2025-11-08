@@ -8,6 +8,22 @@ This is a **from-scratch transformer implementation** using only NumPy (no PyTor
 
 **Key characteristic:** This is an educational codebase prioritizing readability and understanding over optimization. Every component has extensive documentation explaining both the "what" and the "why".
 
+## Learning Resources
+
+**📚 For learning transformer architecture:** Start with the [lessons/](lessons/) directory, which contains a comprehensive 9-lesson series covering every stage of the transformer pipeline:
+
+1. `lesson_01_embeddings_and_positional_encoding.md` - Stages 1-2
+2. `lesson_02_attention_mechanism.md` - Stage 3 (multi-head attention)
+3. `lesson_03_residual_layernorm_ffn.md` - Stages 4-6
+4. `lesson_04_transformer_block_2.md` - Stage 7 (stacking blocks)
+5. `lesson_05_output_projection.md` - Stage 8
+6. `lesson_06_softmax_and_loss.md` - Stage 9
+7. `lesson_07_backpropagation.md` - Stage 10 (gradients)
+8. `lesson_08_training_loop.md` - Stage 11 (optimizers)
+9. `lesson_09_training_dynamics.md` - Stage 12 (how model learns)
+
+See [lessons/README.md](lessons/README.md) for the complete learning path (~15 hours of material).
+
 ## Common Commands
 
 ### Testing
